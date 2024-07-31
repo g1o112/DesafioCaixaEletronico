@@ -1,0 +1,67 @@
+﻿﻿
+<!DOCTYPE html>
+<html lang="pt-BR">
+<head>
+    <meta charset="UTF-8">
+    <meta name="viewport" content="width=device-width, initial-scale=1.0">
+    <title>Caixa Eletrônico</title>
+</head>
+<body>
+    <h1>Caixa Eletrônico</h1>
+    <label for="valor">Digite o valor do saque (múltiplo de R$ 10 e mínimo de R$ 10):</label>
+    <input type="number" id="valor" min="10" step="10">
+    <button id="calcular">Calcular Notas</button>
+
+    <h2>Quantidade de Notas:</h2>
+    <div id="resultado"></div>
+
+    <script>
+        document.getElementById('calcular').addEventListener('click', async () => {
+            const valorInput = document.getElementById('valor').value;
+            const valor = parseInt(valorInput); // converter o valor p inteiro
+
+            // verificando se o numero é multiplo etc
+            if (isNaN(valor) || valor < 10 || valor % 10 !== 0) {
+                document.getElementById('resultado').innerText = 'Por favor, insira um valor válido (múltiplo de R$ 10 e maior ou igual a R$ 10).';
+                return; // retorna para evitar enviar a requisição
+            }
+
+            console.log("Valor enviado:", valor); // debbuginggg
+
+            try {
+                const response = await fetch('/api/atm/calcular', {
+                    method: 'POST',
+                    headers: {
+                        'Content-Type': 'application/json'
+                    },
+                    body: JSON.stringify({ Valor: valor }) // enviando como objeto JSON p processar corretamente
+                });
+
+                if (!response.ok) {
+                    const errorMessage = await response.text(); // pegando a mensagem de erro do servidor e exibindo
+                    throw new Error(`Erro ao calcular notas: ${errorMessage}`);
+                }
+
+                const resultado = await response.json();
+                exibirResultado(resultado);
+            } catch (error) {
+                document.getElementById('resultado').innerText = error.message;
+            }
+        });
+
+        //exibindo o resultado----------------------------------------------------------
+        function exibirResultado(notas) {
+            const resultadoDiv = document.getElementById('resultado');
+            resultadoDiv.innerHTML = ''; // limpa o resultado anterior qnd colocar um novo valor d saque
+
+            let totalNotas = 0;
+
+            for (const [nota, quantidade] of Object.entries(notas)) {
+                resultadoDiv.innerHTML += `${quantidade} nota(s) de R$ ${nota}<br>`;
+                totalNotas += quantidade;
+            }
+            resultadoDiv.innerHTML += `<strong>Total de notas: ${totalNotas}</strong><br>`; //total de notas
+        }
+    </script>
+</body>
+</html>
