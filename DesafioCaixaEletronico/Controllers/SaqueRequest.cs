@@ -1,11 +1,9 @@
-﻿using System.Text.Json.Serialization;
-
-namespace DesafioCaixaEletronico.Controllers
+﻿namespace DesafioCaixaEletronico.Models
 {
-    [JsonSerializable(typeof(SaqueRequest))]
     public class SaqueRequest
     {
-
-        public int Valor { get; set; } // 'Valor' com letra maiúscula
+        public int Valor { get; set; }
+        public string? Senha { get; set; }
+        public string? NumeroConta { get; set; }  // Adicione esta linha
     }
 }

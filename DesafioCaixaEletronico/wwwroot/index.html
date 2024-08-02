@@ -1,13 +1,28 @@
-﻿﻿
-<!DOCTYPE html>
+﻿<!DOCTYPE html>
 <html lang="pt-BR">
 <head>
     <meta charset="UTF-8">
     <meta name="viewport" content="width=device-width, initial-scale=1.0">
     <title>Caixa Eletrônico</title>
+    <style>
+        .form-criar-conta {
+            display: none; /* Oculta o formulário  */
+        }
+
+        #formSaque {
+            display: none; /* Oculta o formulário de saque login */
+        }
+
+        #resultado, #resultadoSaque, #mensagemBoasVindas, #saldoAtual {
+            margin-top: 10px;
+        }
+    </style>
 </head>
 <body>
     <h1>Caixa Eletrônico</h1>
+
+    <!-- calcular notas simples------------------------------------------------->
+    <h2>Calcular Notas</h2>
     <label for="valor">Digite o valor do saque (múltiplo de R$ 10 e mínimo de R$ 10):</label>
     <input type="number" id="valor" min="10" step="10">
     <button id="calcular">Calcular Notas</button>
@@ -16,17 +31,10 @@
     <div id="resultado"></div>
 
     <script>
+        // Evento para calcular notas
         document.getElementById('calcular').addEventListener('click', async () => {
             const valorInput = document.getElementById('valor').value;
-            const valor = parseInt(valorInput); // converter o valor p inteiro
-
-            // verificando se o numero é multiplo etc
-            if (isNaN(valor) || valor < 10 || valor % 10 !== 0) {
-                document.getElementById('resultado').innerText = 'Por favor, insira um valor válido (múltiplo de R$ 10 e maior ou igual a R$ 10).';
-                return; // retorna para evitar enviar a requisição
-            }
-
-            console.log("Valor enviado:", valor); // debbuginggg
+            const valor = parseInt(valorInput);
 
             try {
                 const response = await fetch('/api/atm/calcular', {
@@ -34,11 +42,11 @@
                     headers: {
                         'Content-Type': 'application/json'
                     },
-                    body: JSON.stringify({ Valor: valor }) // enviando como objeto JSON p processar corretamente
+                    body: JSON.stringify({ Valor: valor })
                 });
 
                 if (!response.ok) {
-                    const errorMessage = await response.text(); // pegando a mensagem de erro do servidor e exibindo
+                    const errorMessage = await response.text();
                     throw new Error(`Erro ao calcular notas: ${errorMessage}`);
                 }
 
@@ -49,10 +57,10 @@
             }
         });
 
-        //exibindo o resultado----------------------------------------------------------
+        // func para exibir o resultado saque simples
         function exibirResultado(notas) {
             const resultadoDiv = document.getElementById('resultado');
-            resultadoDiv.innerHTML = ''; // limpa o resultado anterior qnd colocar um novo valor d saque
+            resultadoDiv.innerHTML = ''; // limpa o resultado anterior
 
             let totalNotas = 0;
 
@@ -60,7 +68,236 @@
                 resultadoDiv.innerHTML += `${quantidade} nota(s) de R$ ${nota}<br>`;
                 totalNotas += quantidade;
             }
-            resultadoDiv.innerHTML += `<strong>Total de notas: ${totalNotas}</strong><br>`; //total de notas
+            resultadoDiv.innerHTML += `<strong>Total de notas: ${totalNotas}</strong><br>`;
+        }
+    </script>
+    <!--fim calc notas simples------------------------------------------------->
+    <!-- Login ---------------------------------------------------------------->
+    <h2>Login</h2>
+    <form id="loginForm">
+        <label for="numeroConta">Número da Conta:</label>
+        <input type="text" id="numeroConta" required>
+        <label for="senha">Senha:</label>
+        <input type="password" id="senha" autocomplete="current-password" required>
+        <button type="submit" id="login">Entrar</button>
+        <button type="button" id="criarContaBtn">Criar Conta</button>
+    </form>
+
+    <div id="mensagemBoasVindas" style="display: none;"></div> <!--boas vindas-->
+    <div id="saldoAtual" style="display: none;"></div> <!-- exibe o saldo atual -->
+
+    <div class="form-criar-conta" id="formCriarConta">
+        <h2>Criar Conta</h2>
+        <form id="criarContaForm">
+            <label for="nome">Nome:</label>
+            <input type="text" id="nome" required>
+            <label for="saldo">Saldo Inicial:</label>
+            <input type="number" id="saldo" required>
+            <label for="senhaCriacao">Senha:</label>
+            <input type="password" id="senhaCriacao" autocomplete="new-password" required>
+            <button type="submit" id="criarConta">Criar Conta</button>
+        </form>
+    </div>
+
+    <div id="formSaque">
+        <h2>Realizar Saque</h2>
+        <label for="valorSaque">Valor do Saque:</label>
+        <input type="number" id="valorSaque" min="10" step="10" required>
+        <button id="sacar">Sacar</button>
+        <div id="resultadoSaque"></div>
+        <button id="sair" style="display: none;">Sair</button>
+    </div>
+
+    <script>
+        document.getElementById('loginForm').addEventListener('submit', async (event) => {
+            event.preventDefault(); // impede o envio padrão do formulário
+
+            const numeroConta = document.getElementById('numeroConta').value;
+            const senha = document.getElementById('senha').value;
+
+            const loginRequest = {
+                NumeroConta: numeroConta,
+                Senha: senha
+            };
+
+            try {
+                const response = await fetch('/api/conta/login', {
+                    method: 'POST',
+                    headers: {
+                        'Content-Type': 'application/json'
+                    },
+                    body: JSON.stringify(loginRequest)
+                });
+
+                if (!response.ok) {
+                    const errorMessage = await response.text();
+                    throw new Error(`Erro ao fazer login: ${errorMessage}`);
+                }
+
+                const resultado = await response.json();
+                console.log('Resposta do servidor ao login:', resultado);
+
+                // após login
+                // mensagem de boas-vindas usando a mensagem
+                if (resultado.mensagem) {
+                    const mensagemBoasVindas = document.getElementById('mensagemBoasVindas');
+                    mensagemBoasVindas.innerText = resultado.mensagem;
+                    mensagemBoasVindas.style.display = 'block';
+
+                    if (resultado.saldo !== null) { // mostrar o saldo
+                        const saldoDiv = document.getElementById('saldoAtual');
+                        saldoDiv.innerText = `Seu saldo atual é: R$ ${resultado.saldo}`;
+                        saldoDiv.style.display = 'block';
+                    }
+
+                    // ocultando form de login e mostrando de saque
+                    document.getElementById('loginForm').style.display = 'none';
+                    document.getElementById('formSaque').style.display = 'block';
+
+                    // botao sair da conta
+                    const sairBtn = document.getElementById('sair');
+                    sairBtn.style.display = 'block';
+                    sairBtn.addEventListener('click', () => {
+                        // aqui retornando a tela de login ao sair da conta, mostrando form login
+                        mensagemBoasVindas.style.display = 'none';
+                        document.getElementById('formSaque').style.display = 'none';
+                        document.getElementById('loginForm').style.display = 'block';
+                        sairBtn.style.display = 'none';
+
+                        document.getElementById('numeroConta').value = '';
+                        document.getElementById('senha').value = '';
+
+                        // limpa os inputs do saque
+                        document.getElementById('valorSaque').value = '';
+
+                        // oculta o saldo atual
+                        document.getElementById('saldoAtual').style.display = 'none';
+                    });
+                } else {
+                    console.error('Mensagem de boas-vindas não encontrada na resposta:', resultado);
+                }
+            } catch (error) {
+                alert('Erro ao fazer login: ' + error.message);
+            }
+        });
+
+        // criação de conta---------------------------------------------------------
+        document.getElementById('criarContaBtn').addEventListener('click', () => {
+            document.getElementById('formCriarConta').style.display = 'block'; // Mostra o formulário de criar conta
+        });
+
+        // formulario  criar conta
+        document.getElementById('criarContaForm').addEventListener('submit', async (event) => {
+            event.preventDefault(); // Impede o envio padrão do formulário
+
+            const nome = document.getElementById('nome').value;
+            const saldo = parseFloat(document.getElementById('saldo').value);
+            const senha = document.getElementById('senhaCriacao').value;
+            const numeroConta = Math.random().toString().slice(2, 10); // Gera um número de conta aleatório
+
+            const criarContaRequest = {
+                Nome: nome,
+                Saldo: saldo,
+                Senha: senha,
+                NumeroConta: numeroConta
+            };
+
+            // log para verificar os dados que foram enviados
+            console.log('Dados para criar conta:', criarContaRequest);
+
+            try {
+                const response = await fetch('/api/conta/criar', {
+                    method: 'POST',
+                    headers: {
+                        'Content-Type': 'application/json'
+                    },
+                    body: JSON.stringify(criarContaRequest)
+                });
+
+                if (!response.ok) {
+                    const errorMessage = await response.text();
+                    console.error('Erro na resposta do servidor ao criar conta:', errorMessage); // log para erro
+                    throw new Error(`Erro ao criar conta: ${errorMessage}`);
+                }
+
+                const resultado = await response.json();
+                console.log('Resposta do servidor ao criar conta:', resultado); // resposta do servidor
+                alert(`Conta criada com sucesso! Número da conta: ${numeroConta}`);
+
+                // assim q criada ele limpa e oculta o criar conta
+                document.getElementById('formCriarConta').reset();
+                document.getElementById('formCriarConta').style.display = 'none';
+            } catch (error) {
+                alert('Erro ao criar conta: ' + error.message);
+            }
+        });
+
+        // realizar saque --------------------------------------------------------
+        document.getElementById('sacar').addEventListener('click', async () => {
+            const valorSaqueInput = document.getElementById('valorSaque').value;
+            const valorSaque = parseInt(valorSaqueInput);
+
+            const numeroConta = document.getElementById('numeroConta').value;
+            const senha = document.getElementById('senha').value;
+
+            try {
+                // Obter saldo
+                const saldoResponse = await fetch(`/api/conta/saldo?numeroConta=${numeroConta}&senha=${senha}`, {
+                    method: 'GET'
+                });
+
+                if (!saldoResponse.ok) {
+                    const errorMessage = await saldoResponse.text();
+                    throw new Error(`Erro ao verificar saldo: ${errorMessage}`);
+                }
+
+                const saldoResultado = await saldoResponse.json();
+                const saldo = saldoResultado.saldo;
+
+                if (valorSaque > saldo) {
+                    throw new Error('Saldo insuficiente.');
+                }
+
+                const saqueRequest = {
+                    Valor: valorSaque
+                };
+
+                // Calcular notas para o saque
+                const saqueResponse = await fetch('/api/atm/calcular', {
+                    method: 'POST',
+                    headers: {
+                        'Content-Type': 'application/json'
+                    },
+                    body: JSON.stringify(saqueRequest)
+                });
+
+                if (!saqueResponse.ok) {
+                    const errorMessage = await saqueResponse.text();
+                    throw new Error(`Erro ao calcular notas para saque: ${errorMessage}`);
+                }
+
+                const notas = await saqueResponse.json();
+                exibirResultadoSaque(notas);
+            } catch (error) {
+                document.getElementById('resultadoSaque').innerText = error.message;
+            }
+        });
+
+        // função para exibir resultado saque
+        function exibirResultadoSaque(notas) {
+            const resultadoSaqueDiv = document.getElementById('resultadoSaque');
+            resultadoSaqueDiv.innerHTML = ''; // limpa o resultado anterior
+
+            let totalNotas = 0;
+            let valorTotal = 0;
+
+            for (const [nota, quantidade] of Object.entries(notas)) {
+                resultadoSaqueDiv.innerHTML += `${quantidade} nota(s) de R$ ${nota}<br>`;
+                totalNotas += quantidade;
+                valorTotal += nota * quantidade;
+            }
+            resultadoSaqueDiv.innerHTML += `<strong>Total de notas: ${totalNotas}</strong><br>`;
+            resultadoSaqueDiv.innerHTML += `<strong>Valor total: R$ ${valorTotal}</strong><br>`;
         }
     </script>
 </body>

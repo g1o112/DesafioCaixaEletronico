@@ -1,27 +1,42 @@
 ﻿using Microsoft.AspNetCore.Mvc;
 using DesafioCaixaEletronico.Services;
-using DesafioCaixaEletronico.Controllers;
+using DesafioCaixaEletronico.Models;
 
 namespace DesafioCaixaEletronico.Controllers
 {
-    [Route("api/[controller]")] //Define a rota base para esse controlador... o [controller] sera substituído pelo nome da classe q no caso e a /api/atm.
+    [Route("api/[controller]")]
     [ApiController]
     public class AtmController : ControllerBase
     {
         private readonly AtmService _atmService;
+        private readonly ContaService _contaService; // Adicione esta linha para injetar o ContaService
 
-        public AtmController()
+        public AtmController(AtmService atmService, ContaService contaService)
         {
-            _atmService = new AtmService(); //chamando o atm service 
+            _atmService = atmService;
+            _contaService = contaService; // Inicialize o ContaService
         }
 
-        // metodo para calcular notas a partir de uma requisição HTTP POST
         [HttpPost("calcular")]
-        public IActionResult CalcularNotas([FromBody] SaqueRequest request) //recebe a request sendo no saquerequest q tem o valor do saque
+        public IActionResult CalcularNotas([FromBody] SaqueRequest request)
         {
             try
             {
                 var resultado = _atmService.CalcularNotas(request.Valor, DateTime.Now);
+                return Ok(resultado);
+            }
+            catch (ArgumentException ex)
+            {
+                return BadRequest(ex.Message);
+            }
+        }
+
+        [HttpPost("sacar")]
+        public async Task<IActionResult> Sacar([FromBody] SaqueRequest request)
+        {
+            try
+            {
+                var resultado = await _atmService.Sacar(request.NumeroConta!, request.Senha!, request.Valor);
                 return Ok(resultado);
             }
             catch (ArgumentException ex)
