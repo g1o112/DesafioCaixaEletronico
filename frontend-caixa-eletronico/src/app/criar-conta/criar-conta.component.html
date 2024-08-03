@@ -1,18 +1,12 @@
-<div id="formCriarConta">
-  <h2>Criar Conta</h2>
+<div class="direito">
+  <h1><span class="criar">Criar  </span> <span class="conta"> Conta</span></h1>
+  <p>Crie sua conta para poder sacar no caixa eletrônico</p>
   <form (ngSubmit)="criarConta()">
-    <label for="nome">Nome:</label>
-    <input type="text" id="nome" [(ngModel)]="nome" name="nome" required>
-
-    <label for="saldo">Saldo Inicial:</label>
-    <input type="number" id="saldo" [(ngModel)]="saldo" name="saldo" required>
-
-    <label for="senhaCriacao">Senha:</label>
-    <input type="password" id="senhaCriacao" [(ngModel)]="senha" name="senhaCriacao" required>
-
-    <button type="submit">Criar Conta</button>
+    <input type="text" id="nome" [(ngModel)]="nome" placeholder="Nome" name="nome" required>
+    <input type="number" id="saldo" [(ngModel)]="saldo" placeholder="Saldo Inicial" name="saldo" required>
+    <input type="password" id="senhaCriacao" [(ngModel)]="senha" placeholder="Senha" name="senhaCriacao" required>
+    <button type="submit" class="entrar">Criar Conta</button>
   </form>
-
   <div *ngIf="mensagemSucesso" class="success">{{ mensagemSucesso }}</div>
   <div *ngIf="mensagemErro" class="error">{{ mensagemErro }}</div>
 </div>

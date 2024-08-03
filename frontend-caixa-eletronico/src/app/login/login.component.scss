@@ -3,9 +3,11 @@
   height: 92vh;
   background-color: #ffff;
   border-radius: 30px;
+
   display: flex;
   flex-direction: column;
   align-items: center;
+
   margin-right: 60px;
 }
 
@@ -20,18 +22,11 @@
 
 .direito h1 {
   font-family: "Montserrat", sans-serif;
-  font-weight: 400;
+  font-weight: 200;
   font-size: 90px;
-  margin-bottom: 20px;
-  gap: 10px;
-}
-
-.direito h1 .criar {
-  display: inline-block;
-}
-
-.direito h1 .conta {
-  display: inline-block;
+  margin-bottom: 50px;
+  text-align: left;
+  width: 80%;
 }
 
 .direito input {
@@ -41,7 +36,8 @@
   font-size: 17px;
   background-color: #F5F5F5;
   color: #898989;
-  border: 0.5px solid #BCBCBC;
+  border: .5px solid #BCBCBC ;
+
 }
 
 input::placeholder {
@@ -50,12 +46,13 @@ input::placeholder {
   font-size: 17px;
 }
 
-.entrar, .direito button {
+.entrar{
   font-family: "Montserrat", sans-serif;
   color: #ffffff;
   font-size: 17px;
   font-weight: 500;
   height: 56px;
+
   border: none;
   border-radius: 30px;
   margin-left: 10px;
@@ -63,10 +60,31 @@ input::placeholder {
   cursor: pointer;
 }
 
-.or-divider span {
+.or-divider {
+  display: flex;
+  align-items: center;
+  width: 50%;
+  text-align: center;
+  border-bottom: none;
+  margin: 20px 0;
+  font-size: 17px;
+
+  margin-left: 25%;
+}
+
+.direito .or-divider::before,
+.direito .or-divider::after {
+  content: "";
+  flex: 1;
+  border-bottom: 1px solid #BCBCBC;
+  margin: 0 10px;
+}
+
+.or-divider span{
   display: flex;
   justify-content: center;
   align-items: center;
+
   color: #BCBCBC;
 }
 
@@ -75,6 +93,7 @@ input::placeholder {
   align-items: center;
   justify-content: center;
   gap: 10px;
+
   margin-top: 100px;
 }
 
@@ -84,13 +103,15 @@ input::placeholder {
   color: #0A1B1E;
 }
 
-.conta{
-  color: #A7CE2E;
-}
-
-p {
+.direito .criar-conta {
   font-family: "Montserrat", sans-serif;
-  color: #0A1B1E;
-  font-size: 20px;
-  margin-bottom: 20px;
+
+  background-color: transparent;
+  border: none;
+  color: #A7CE2E;
+  font-size: 18px;
+  font-weight: 600;
+  text-align: left;
+  padding: 0;
+  cursor: pointer;
 }

@@ -1,0 +1,15 @@
+<div class="direito">
+<h1>Caixa<br> Eletrônico</h1>
+<form (ngSubmit)="FazerLogin()">
+  <input type="text" id="numeroConta" [(ngModel)]="loginData.numeroConta" placeholder="Número da conta" name="numeroConta" required>
+
+  <input type="password" id="senha" [(ngModel)]="loginData.senha" placeholder="Senha" name="senha" required>
+
+  <button type="submit" class="entrar">Entrar</button>
+  <div class="or-divider"><span>or</span></div>
+  <div class="criar-conta-container">
+    <span>Não tem uma conta?</span>
+    <button type="button" class="criar-conta" (click)="mostrarCriarConta()">Criar Conta</button>
+  </div>
+</form>
+</div>

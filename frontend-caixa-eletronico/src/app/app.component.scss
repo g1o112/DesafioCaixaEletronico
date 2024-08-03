@@ -1,0 +1,42 @@
+.container {
+  display: flex;
+  height: 100vh;
+
+  background-image: url('../assets/linha.png');
+  background-repeat: no-repeat; /* Evita a repetição da imagem */
+  background-position: 70% center; /* Centraliza a imagem no contêiner */
+}
+
+.left-side, .right-side {
+  flex: 1;
+  padding: 40px;
+  box-sizing: border-box;
+}
+
+.left-side {
+  display: flex;
+  justify-content: left;
+  align-items: center;
+}
+
+.right-side {
+  display: flex;
+  flex-direction: column;
+  justify-content: center;
+  align-items: center;
+}
+
+button {
+  margin-top: 10px;
+}
+
+.ion {
+  font-family: "Montserrat", sans-serif;
+  font-size: 24px;
+  font-weight: 200px;
+  color: #ffffff;
+
+  position: absolute;
+  top: 30px;
+  left: 50px;
+}

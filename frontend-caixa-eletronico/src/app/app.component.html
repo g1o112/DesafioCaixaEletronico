@@ -1,27 +1,26 @@
-<!-- Componente de Cálculo de Notas -->
-<app-calcular-notas *ngIf="mostrarCalcularNotas"></app-calcular-notas>
+<div class="container">
 
-<!-- Formulário de Login -->
-<form *ngIf="!usuarioLogado && !mostrarFormularioCriarConta" (ngSubmit)="FazerLogin()">
-  <h1>Fazer login</h1>
-  <label for="numeroConta">Número da Conta:</label>
-  <input type="text" id="numeroConta" [(ngModel)]="loginData.numeroConta" name="numeroConta" required>
+  <div class="left-side">
 
-  <label for="senha">Senha:</label>
-  <input type="password" id="senha" [(ngModel)]="loginData.senha" name="senha" required>
+    <p class="ion">íon</p>
+    <app-calcular-notas></app-calcular-notas>
+  </div>
 
-  <button type="submit">Entrar</button>
-  <button type="button" (click)="mostrarCriarConta()">Criar Conta</button>
-</form>
+  <!-- Lado Direito - Formulário de Login e Criação de Conta -->
+  <div class="right-side">
+    <app-login *ngIf="!usuarioLogado && !mostrarFormularioCriarConta"
+               (loginSuccess)="onLoginSuccess($event)"
+               (criarConta)="mostrarCriarConta()"></app-login>
 
-<!-- Exibe o componente CriarConta apenas quando mostrarFormularioCriarConta é verdadeiro -->
-<app-criar-conta *ngIf="mostrarFormularioCriarConta" (contaCriada)="esconderFormularioCriarConta()"></app-criar-conta>
+    <app-criar-conta *ngIf="mostrarFormularioCriarConta"
+                     (contaCriada)="esconderFormularioCriarConta()"></app-criar-conta>
 
-<div *ngIf="usuarioLogado">
-  <h2>Bem-vindo, {{ usuarioLogado.nome }}</h2>
-  <p>Saldo: R$ {{ usuarioLogado.saldo }}</p>
-
-  <!-- Componente de Saque -->
-  <app-saque [usuarioLogado]="usuarioLogado"></app-saque>
-  <button (click)="sair()">Sair</button>
+    <div *ngIf="usuarioLogado">
+      <h2>Bem-vindo, {{ usuarioLogado.nome }}</h2>
+      <p>Saldo: R$ {{ usuarioLogado.saldo }}</p>
+      <app-saque [usuarioLogado]="usuarioLogado"></app-saque>
+      <button (click)="sair()">Sair</button>
+    </div>
+  </div>
 </div>
+

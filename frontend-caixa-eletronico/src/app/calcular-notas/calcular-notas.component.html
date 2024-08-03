@@ -1,14 +1,26 @@
-<h2>Calcular Notas</h2>
-<label for="valor">Digite o valor do saque (múltiplo de R$ 10 e mínimo de R$ 10):</label>
-<input type="number" id="valor" [(ngModel)]="valor" min="10" step="10">
-<button (click)="calcularNotas()">Calcular Notas</button>
+<div class="container">
+  <p class="insira">Insira um valor de saque</p>
+  <label for="valor"></label>
+  <input type="number" id="valor" [(ngModel)]="valor" min="10" placeholder="Ex: 370" class="no-spinner">
+  <button (click)="calcularNotas()">Calcular</button>
 
-<h2>Quantidade de Notas:</h2>
-<div *ngIf="resultado">
-  <div *ngFor="let nota of (resultado | keyvalue)">
-    {{ nota.key }} nota(s) de R$ {{ nota.key }}: {{ nota.value }}<br>
+  <div *ngIf="resultado" class="resultado-container">
+    <div *ngFor="let nota of (resultado | keyvalue)" class="nota-item">
+      <div class="nota-qtd">
+        <h1>{{ nota.value }}</h1>
+      </div>
+      <div class="nota-descricao">
+        nota(s) de
+        <div class="nota"> R$ {{ nota.key }}</div>
+      </div>
+    </div>
+    <!-- Exibe o total de notas -->
+    <div class="total-notas">
+      Total de Notas: {{ totalNotas }}
+      <div class="linha-animada"></div>
+    </div>
   </div>
-</div>
-<div *ngIf="mensagemErro">
-  <p>{{ mensagemErro }}</p>
+  <div *ngIf="mensagemErro">
+    <p>{{ mensagemErro }}</p>
+  </div>
 </div>
