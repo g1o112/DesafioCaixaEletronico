@@ -1,6 +1,9 @@
-<h1>Fazer login</h1>
+<!-- Componente de Cálculo de Notas -->
+<app-calcular-notas *ngIf="mostrarCalcularNotas"></app-calcular-notas>
 
-<form (ngSubmit)="FazerLogin()">
+<!-- Formulário de Login -->
+<form *ngIf="!usuarioLogado && !mostrarFormularioCriarConta" (ngSubmit)="FazerLogin()">
+  <h1>Fazer login</h1>
   <label for="numeroConta">Número da Conta:</label>
   <input type="text" id="numeroConta" [(ngModel)]="loginData.numeroConta" name="numeroConta" required>
 
@@ -8,8 +11,11 @@
   <input type="password" id="senha" [(ngModel)]="loginData.senha" name="senha" required>
 
   <button type="submit">Entrar</button>
+  <button type="button" (click)="mostrarCriarConta()">Criar Conta</button>
 </form>
 
+<!-- Exibe o componente CriarConta apenas quando mostrarFormularioCriarConta é verdadeiro -->
+<app-criar-conta *ngIf="mostrarFormularioCriarConta" (contaCriada)="esconderFormularioCriarConta()"></app-criar-conta>
 
 <div *ngIf="usuarioLogado">
   <h2>Bem-vindo, {{ usuarioLogado.nome }}</h2>
@@ -18,5 +24,4 @@
   <!-- Componente de Saque -->
   <app-saque [usuarioLogado]="usuarioLogado"></app-saque>
   <button (click)="sair()">Sair</button>
-
 </div>
