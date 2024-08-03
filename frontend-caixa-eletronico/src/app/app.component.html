@@ -10,3 +10,13 @@
   <button type="submit">Entrar</button>
 </form>
 
+
+<div *ngIf="usuarioLogado">
+  <h2>Bem-vindo, {{ usuarioLogado.nome }}</h2>
+  <p>Saldo: R$ {{ usuarioLogado.saldo }}</p>
+
+  <!-- Componente de Saque -->
+  <app-saque [usuarioLogado]="usuarioLogado"></app-saque>
+  <button (click)="sair()">Sair</button>
+
+</div>

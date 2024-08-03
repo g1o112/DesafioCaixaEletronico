@@ -1,12 +1,14 @@
 import { Component } from '@angular/core';
+import { CommonModule } from '@angular/common';
 import { HttpClient } from '@angular/common/http';
 import { FormsModule } from '@angular/forms';
 import { RouterOutlet } from '@angular/router';
+import { SaqueComponent } from './saque/saque.component';
 
 @Component({
   selector: 'app-root',
   standalone: true,
-  imports: [RouterOutlet, FormsModule],
+  imports: [RouterOutlet, FormsModule, SaqueComponent, CommonModule],
   templateUrl: './app.component.html',
   styleUrls: ['./app.component.scss']
 })
@@ -16,25 +18,25 @@ export class AppComponent {
     numeroConta: '',
     senha: ''
   };
+  usuarioLogado: any = null;
 
   constructor(private http: HttpClient) {}
 
   FazerLogin() {
-    console.log('Dados de login:', this.loginData); // Log os dados de login
-
     this.http.post<any>('https://localhost:7263/api/conta/login', this.loginData)
       .subscribe({
         next: (response) => {
-          console.log('Resposta do servidor:', response);
-          // Adicione lógica para lidar com a resposta
-          alert('Login bem-sucedido: ' + JSON.stringify(response));
+          console.log('Login bem-sucedido:', response);
+          this.usuarioLogado = response; // Atualiza a propriedade para mostrar o conteúdo condicional
         },
         error: (err) => {
           console.error('Erro ao fazer login:', err);
-          alert('Erro ao fazer login: ' + err.message);
-          // Adicione lógica para lidar com erros
         }
       });
+  }
+
+  sair() {
+    this.usuarioLogado = null; // Redefine o estado de login
   }
 
 }
