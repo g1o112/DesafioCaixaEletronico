@@ -1,0 +1,12 @@
+<h1>Fazer login</h1>
+
+<form (ngSubmit)="FazerLogin()">
+  <label for="numeroConta">Número da Conta:</label>
+  <input type="text" id="numeroConta" [(ngModel)]="loginData.numeroConta" name="numeroConta" required>
+
+  <label for="senha">Senha:</label>
+  <input type="password" id="senha" [(ngModel)]="loginData.senha" name="senha" required>
+
+  <button type="submit">Entrar</button>
+</form>
+

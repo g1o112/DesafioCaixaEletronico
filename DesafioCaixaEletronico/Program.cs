@@ -22,7 +22,6 @@ builder.Services.AddScoped<ContaService>();
 builder.Services.AddScoped<AtmService>(); // Adicionando o AtmService
 builder.Services.AddScoped<VerificaSaldo>(); // Registrando VerificaSaldo
 
-
 var app = builder.Build();
 
 // Configurar solicitação HTTP
@@ -31,10 +30,16 @@ if (app.Environment.IsDevelopment())
     app.UseDeveloperExceptionPage();
 }
 
-app.UseHttpsRedirection();
+//app.UseHttpsRedirection();
 app.UseStaticFiles();
 app.UseRouting();
+
+// Habilitar CORS para o frontend Angular
+app.UseCors("AllowAngularApp");
+
 app.UseAuthorization();
+
 app.MapControllers();
-app.MapGet("/", () => Results.Redirect("/index.html"));
+app.MapFallbackToFile("index.html");
+
 app.Run();

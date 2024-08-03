@@ -1,18 +1,18 @@
-﻿using Microsoft.AspNetCore.Builder;
-using Microsoft.Extensions.DependencyInjection;
+﻿using Microsoft.Extensions.DependencyInjection;
 
 public class CorsConfig
 {
     public static void ConfigureCors(IServiceCollection services)
     {
-        Console.WriteLine("Configurando CORS!!"); //confirmando q o metodo esta sendo chamade
+        Console.WriteLine("Configurando CORS!!"); // Confirmando que o método está sendo chamado
 
         services.AddCors(options =>
         {
-            options.AddPolicy("AllowSpecificOrigin",
+            // Política para permitir uma origem específica (por exemplo, a URL do frontend Angular)
+            options.AddPolicy("AllowAngularApp",
                 builder =>
                 {
-                    builder.WithOrigins("https://localhost:7263")
+                    builder.WithOrigins("http://localhost:51965") // URL do frontend Angular
                            .AllowAnyMethod()
                            .AllowAnyHeader()
                            .AllowCredentials();
