@@ -18,6 +18,11 @@ export class CalcularNotasComponent {
   constructor(private http: HttpClient) {}
 
   calcularNotas() {
+      if (this.valor % 10 !== 0 || this.valor < 10) {
+        this.mensagemErro = 'O valor deve ser um múltiplo de R$ 10 e no mínimo R$ 10.';
+        this.resultado = null;
+        return;
+      }
     this.http.post<any>('https://localhost:7263/api/atm/calcular', { Valor: this.valor })
       .subscribe({
         next: (notas) => {

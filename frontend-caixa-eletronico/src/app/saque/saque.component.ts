@@ -28,6 +28,11 @@ export class SaqueComponent {
       return;
     }
 
+    if (this.valorSaque % 10 !== 0 || this.valorSaque < 10) {
+      this.mensagemErro = 'O valor do saque deve ser múltiplo de 10 e no mínimo R$10.';
+      return;
+    }
+
     const saqueRequest = { Valor: this.valorSaque };
 
     this.http.post<NotaQuantidades>('https://localhost:7263/api/atm/calcular', saqueRequest)
