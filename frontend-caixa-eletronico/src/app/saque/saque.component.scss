@@ -1,0 +1,101 @@
+.direito {
+  width: 90vh;
+  height: 92vh;
+  background-color: #ffff;
+  border-radius: 30px;
+  display: flex;
+  flex-direction: column;
+  align-items: center;
+  margin-right: 60px;
+}
+
+.direito #formSaque {
+  width: 100%;
+  max-width: 690px;
+  height: auto;
+  display: flex;
+  flex-direction: column;
+  gap: 30px;
+  align-items: center;
+  padding: 20px;
+}
+
+.direito h1 {
+  font-family: "Montserrat", sans-serif;
+  font-weight: 200;
+  font-size: 32px; /* Ajustado para ficar em proporção com o restante */
+  margin-bottom: 20px; /* Ajustado para ajustar o espaçamento */
+  text-align: center;
+  width: 100%;
+}
+
+.direito h2 {
+  font-family: "Montserrat", sans-serif;
+  font-weight: 400;
+  font-size: 24px;
+  margin-bottom: 20px;
+  text-align: center;
+}
+
+.direito label {
+  font-family: "Montserrat", sans-serif;
+  font-size: 18px;
+  color: #0A1B1E;
+}
+
+.direito input {
+  padding-left: 15px;
+  height: 55px;
+  border-radius: 20px;
+  font-size: 17px;
+  background-color: #F5F5F5;
+  color: #898989;
+  border: 0.5px solid #BCBCBC;
+  width: 100%;
+}
+
+input::placeholder {
+  font-family: "Montserrat", sans-serif;
+  color: #aaa;
+  font-size: 17px;
+}
+
+.sair{
+  font-family: "Montserrat", sans-serif;
+  color: #ffffff;
+  font-size: 17px;
+  font-weight: 500;
+  height: 56px;
+  border: none;
+  border-radius: 30px;
+  background-color: #A7CE2E;
+  cursor: pointer;
+  width: 100%;
+}
+
+.sacar{
+  font-family: "Montserrat", sans-serif;
+  color: #ffffff;
+  font-size: 17px;
+  font-weight: 500;
+  height: 56px;
+  border: none;
+  border-radius: 30px;
+  background-color: #0A1B1E;
+  cursor: pointer;
+  width: 100%;
+}
+.direito .error {
+  font-family: "Montserrat", sans-serif;
+  color: #ff0000;
+  font-size: 16px;
+  margin-top: 10px;
+}
+
+#resultadoSaque {
+  font-family: "Montserrat", sans-serif;
+  font-size: 16px;
+  color: #0A1B1E;
+  margin-top: 20px;
+  text-align: center;
+}

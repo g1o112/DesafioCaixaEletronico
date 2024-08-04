@@ -1,12 +1,9 @@
 <div class="container">
-
   <div class="left-side">
-
     <p class="ion">íon</p>
     <app-calcular-notas></app-calcular-notas>
   </div>
 
-  <!-- Lado Direito - Formulário de Login e Criação de Conta -->
   <div class="right-side">
     <app-login *ngIf="!usuarioLogado && !mostrarFormularioCriarConta"
                (loginSuccess)="onLoginSuccess($event)"
@@ -16,11 +13,7 @@
                      (contaCriada)="esconderFormularioCriarConta()"></app-criar-conta>
 
     <div *ngIf="usuarioLogado">
-      <h2>Bem-vindo, {{ usuarioLogado.nome }}</h2>
-      <p>Saldo: R$ {{ usuarioLogado.saldo }}</p>
-      <app-saque [usuarioLogado]="usuarioLogado"></app-saque>
-      <button (click)="sair()">Sair</button>
+      <app-saque [usuarioLogado]="usuarioLogado" [sair]="sair.bind(this)"></app-saque>
     </div>
   </div>
 </div>
-

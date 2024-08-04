@@ -33,10 +33,10 @@ export class AppComponent {
   }
 
   mostrarCriarConta() {
-    this.mostrarFormularioCriarConta = true; // Exibe o formulário de criar conta
+    this.mostrarFormularioCriarConta = true;
   }
 
   esconderFormularioCriarConta() {
-    this.mostrarFormularioCriarConta = false; // Oculta o formulário de criar conta
+    this.mostrarFormularioCriarConta = false;
   }
 }

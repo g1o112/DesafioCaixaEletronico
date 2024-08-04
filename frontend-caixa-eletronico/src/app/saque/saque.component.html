@@ -1,8 +1,14 @@
-<div id="formSaque">
-  <h2>Realizar Saque</h2>
-  <label for="valorSaque">Valor do Saque:</label>
-  <input type="number" id="valorSaque" [(ngModel)]="valorSaque" name="valorSaque" min="10" step="10" required>
-  <button (click)="realizarSaque()">Sacar</button>
-  <div id="resultadoSaque" [innerHTML]="resultadoSaque"></div>
-  <div *ngIf="mensagemErro" class="error">{{ mensagemErro }}</div>
+<div class="direito">
+  <div id="formSaque">
+    <h1>Bem-vindo</h1>
+    <h2>Realizar Saque</h2>
+    <label for="valorSaque">Valor do Saque:</label>
+    <input type="number" id="valorSaque" [(ngModel)]="valorSaque" name="valorSaque" min="10" step="10" required>
+    <button class="sacar" (click)="realizarSaque()">Sacar</button>
+    <div id="resultadoSaque" [innerHTML]="resultadoSaque"></div>
+    <div *ngIf="mensagemErro" class="error">{{ mensagemErro }}</div>
+    <button class="sair" (click)="sair()">Sair</button>
+
+  </div>
+
 </div>

@@ -18,15 +18,25 @@ export class CalcularNotasComponent {
   valor: number = 10;
   resultado: NotaQuantidades | null = null;
   mensagemErro: string = '';
-  totalNotas: number = 0; // Variável para armazenar o total de notas
+  totalNotas: number = 0;
 
   constructor(private http: HttpClient) {}
 
   calcularNotas() {
+    const currentHour = new Date().getHours();
+    const saqueLimite = (currentHour >= 22 || currentHour < 6) ? 1000 : 10000;
+
     if (this.valor % 10 !== 0 || this.valor < 10) {
       this.mensagemErro = 'O valor deve ser um múltiplo de R$ 10 e no mínimo R$ 10.';
       this.resultado = null;
-      this.totalNotas = 0; // Reseta o total de notas em caso de erro
+      this.totalNotas = 0;
+      return;
+    }
+
+    if (this.valor > saqueLimite) {
+      this.mensagemErro = `O valor máximo de saque é de R$ ${saqueLimite},00 neste horário.`;
+      this.resultado = null;
+      this.totalNotas = 0;
       return;
     }
 
