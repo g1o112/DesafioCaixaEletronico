@@ -17,6 +17,7 @@ interface NotaQuantidades {
 export class SaqueComponent {
   @Input() usuarioLogado: any;
   @Input() sair!: () => void;
+
   valorSaque: number = 0;
   resultadoSaque: string = '';
   mensagemErro: string = '';
@@ -42,6 +43,11 @@ export class SaqueComponent {
       return;
     }
 
+    if (this.valorSaque > this.usuarioLogado.saldo) {
+      this.mensagemErro = 'Saldo insuficiente para realizar este saque.';
+      return;
+    }
+
     const saqueRequest = { Valor: this.valorSaque };
     console.log('Enviando solicitação com payload:', saqueRequest);
 
@@ -50,6 +56,7 @@ export class SaqueComponent {
         next: (resultado) => {
           console.log('Resposta recebida:', resultado);
           this.exibirResultadoSaque(resultado);
+          this.usuarioLogado.saldo -= this.valorSaque; // att o saldo do usuário localmente
           this.mensagemErro = '';
         },
         error: (err) => {
@@ -64,18 +71,10 @@ export class SaqueComponent {
     let totalNotas = 0;
 
     for (const [nota, quantidade] of Object.entries(notas)) {
-      // Aqui `quantidade` é do tipo `number` e `nota` é do tipo `string`.
       resultado += `${quantidade} nota(s) de R$ ${nota}<br>`;
       totalNotas += quantidade;
     }
     resultado += `<strong>Total de notas: ${totalNotas}</strong><br>`;
     this.resultadoSaque = resultado;
-  }
-
-  getNomeUsuarioFormatado() {
-    if (this.usuarioLogado && this.usuarioLogado.nome) {
-      return `Bem-vindo, ${this.usuarioLogado.nome}`;
-    }
-    return '';
   }
 }

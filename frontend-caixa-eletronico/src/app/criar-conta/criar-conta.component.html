@@ -6,7 +6,10 @@
     <input type="number" id="saldo" [(ngModel)]="saldo" placeholder="Saldo Inicial" name="saldo" required>
     <input type="password" id="senhaCriacao" [(ngModel)]="senha" placeholder="Senha" name="senhaCriacao" required>
     <button type="submit" class="entrar">Criar Conta</button>
+    <button class="voltar" (click)="Voltar()">Voltar</button>
+
   </form>
   <div *ngIf="mensagemSucesso" class="success">{{ mensagemSucesso }}</div>
   <div *ngIf="mensagemErro" class="error">{{ mensagemErro }}</div>
+
 </div>

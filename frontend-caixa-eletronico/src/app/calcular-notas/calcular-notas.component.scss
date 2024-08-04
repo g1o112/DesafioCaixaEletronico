@@ -96,7 +96,7 @@ button {
   margin-top: 20px;
   position: relative;
   padding-bottom: 10px;
-  overflow: hidden; /* Garante que a linha animada não ultrapasse os limites */
+  overflow: hidden;
 }
 
 .linha-animada {
@@ -119,4 +119,11 @@ button {
   100% {
     transform: translateX(0%);
   }
+}
+
+.error {
+  font-family: "Montserrat", sans-serif;
+  color: #ff0000;
+  font-size: 16px;
+  margin-top: 10px;
 }

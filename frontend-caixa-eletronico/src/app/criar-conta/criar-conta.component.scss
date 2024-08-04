@@ -50,7 +50,7 @@ input::placeholder {
   font-size: 17px;
 }
 
-.entrar, .direito button {
+.entrar{
   font-family: "Montserrat", sans-serif;
   color: #ffffff;
   font-size: 17px;
@@ -59,7 +59,7 @@ input::placeholder {
   border: none;
   border-radius: 30px;
   margin-left: 10px;
-  background-color: #0A1B1E;
+  background-color: #A7CE2E;
   cursor: pointer;
 }
 
@@ -93,4 +93,17 @@ p {
   color: #0A1B1E;
   font-size: 20px;
   margin-bottom: 20px;
+}
+
+.voltar{
+  font-family: "Montserrat", sans-serif;
+  color: #ffffff;
+  font-size: 17px;
+  font-weight: 500;
+  height: 56px;
+  border: none;
+  border-radius: 30px;
+  margin-left: 10px;
+  background-color: #0A1B1E;
+  cursor: pointer;
 }

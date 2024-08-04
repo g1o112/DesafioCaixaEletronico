@@ -10,7 +10,8 @@
                (criarConta)="mostrarCriarConta()"></app-login>
 
     <app-criar-conta *ngIf="mostrarFormularioCriarConta"
-                     (contaCriada)="esconderFormularioCriarConta()"></app-criar-conta>
+                     (contaCriada)="esconderFormularioCriarConta()"
+                     (voltar)="voltarCriarConta()"></app-criar-conta>
 
     <div *ngIf="usuarioLogado">
       <app-saque [usuarioLogado]="usuarioLogado" [sair]="sair.bind(this)"></app-saque>

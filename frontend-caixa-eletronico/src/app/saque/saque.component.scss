@@ -20,13 +20,26 @@
   padding: 20px;
 }
 
-.direito h1 {
+.titulo-saque {
+  position: relative;
+  padding-left: 20px;
   font-family: "Montserrat", sans-serif;
-  font-weight: 200;
-  font-size: 32px; /* Ajustado para ficar em proporção com o restante */
-  margin-bottom: 20px; /* Ajustado para ajustar o espaçamento */
-  text-align: center;
+  font-weight: 500;
+  font-size: 50px;
+  margin-top: 40px;
+  margin-bottom: 20px;
+  text-align: left;
   width: 100%;
+}
+
+.titulo-saque::before {
+  content: "";
+  position: absolute;
+  left: 0;
+  top: 0;
+  bottom: 0;
+  width: 5px;
+  background-color: #A7CE2E;
 }
 
 .direito h2 {
@@ -34,13 +47,31 @@
   font-weight: 400;
   font-size: 24px;
   margin-bottom: 20px;
-  text-align: center;
+  text-align: left;
+  width: 100%;
 }
 
-.direito label {
-  font-family: "Montserrat", sans-serif;
-  font-size: 18px;
+.saldo {
   color: #0A1B1E;
+  font-size: 30;
+}
+
+.valor-saldo {
+  display: block;
+  color: #A7CE2E;
+  font-weight: 700;
+}
+
+.valor-saque{
+  font-family: "Montserrat", sans-serif;
+  font-weight: 400;
+  font-size: 24px;
+  margin-bottom: 20px;
+  text-align: left;
+  width: 100%;
+  color: #0A1B1E;
+  font-size: 30;
+
 }
 
 .direito input {
@@ -60,7 +91,7 @@ input::placeholder {
   font-size: 17px;
 }
 
-.sair{
+.sair {
   font-family: "Montserrat", sans-serif;
   color: #ffffff;
   font-size: 17px;
@@ -73,7 +104,7 @@ input::placeholder {
   width: 100%;
 }
 
-.sacar{
+.sacar {
   font-family: "Montserrat", sans-serif;
   color: #ffffff;
   font-size: 17px;
@@ -85,6 +116,7 @@ input::placeholder {
   cursor: pointer;
   width: 100%;
 }
+
 .direito .error {
   font-family: "Montserrat", sans-serif;
   color: #ff0000;
@@ -94,7 +126,8 @@ input::placeholder {
 
 #resultadoSaque {
   font-family: "Montserrat", sans-serif;
-  font-size: 16px;
+  font-size: 17px;
+  font-weight: 500;
   color: #0A1B1E;
   margin-top: 20px;
   text-align: center;

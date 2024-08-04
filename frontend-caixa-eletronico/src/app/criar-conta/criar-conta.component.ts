@@ -18,11 +18,13 @@ export class CriarContaComponent {
   mensagemSucesso: string = '';
 
   @Output() contaCriada = new EventEmitter<void>();
+  @Output() voltar = new EventEmitter<void>();
+
 
   constructor(private http: HttpClient) {}
 
   criarConta() {
-    const numeroConta = Math.random().toString().slice(2, 10); // Gera um número de conta aleatório
+    const numeroConta = Math.random().toString().slice(2, 10); // gera nmr de conta aleatório
 
     const criarContaRequest = {
       Nome: this.nome,
@@ -36,7 +38,7 @@ export class CriarContaComponent {
         next: (resultado) => {
           this.mensagemSucesso = `Conta criada com sucesso! Número da conta: ${numeroConta}`;
           this.mensagemErro = '';
-          this.contaCriada.emit(); // Emite o evento quando a conta é criada com sucesso
+          this.contaCriada.emit(); //conta criada c sucesso
         },
         error: (err) => {
           console.error('Erro ao criar conta:', err);
@@ -44,5 +46,9 @@ export class CriarContaComponent {
           this.mensagemSucesso = '';
         }
       });
+  }
+
+  Voltar() {
+    this.voltar.emit();
   }
 }

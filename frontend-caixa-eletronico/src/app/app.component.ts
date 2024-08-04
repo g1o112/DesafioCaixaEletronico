@@ -39,4 +39,8 @@ export class AppComponent {
   esconderFormularioCriarConta() {
     this.mostrarFormularioCriarConta = false;
   }
+
+  voltarCriarConta() {
+    this.esconderFormularioCriarConta();
+  }
 }
